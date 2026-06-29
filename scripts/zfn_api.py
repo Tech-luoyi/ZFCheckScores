@@ -10,6 +10,7 @@ import requests
 import rsa
 from pyquery import PyQuery as pq
 from requests import exceptions
+import os
 
 RASPIANIE = [
     ["8:00", "8:40"],
