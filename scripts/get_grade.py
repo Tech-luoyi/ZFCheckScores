@@ -1,5 +1,6 @@
 import time
 import traceback
+from datetime import datetime, timedelta
 
 
 def get_grade(student_client, output_type="none"):
@@ -57,6 +58,16 @@ def get_grade(student_client, output_type="none"):
                 ),
                 reverse=True,
             )
+
+            # 只保留最近6个月（一个学期）的成绩，过滤掉上学期及更早的成绩
+            six_months_ago = (datetime.now() - timedelta(days=180)).strftime("%Y-%m-%d")
+            current_semester_grade = [
+                c for c in sorted_grade
+                if c.get("submission_time") and c["submission_time"][:10] >= six_months_ago
+            ]
+            # 如果最近6个月有成绩就用过滤后的，否则回退到全部成绩（避免完全空）
+            if current_semester_grade:
+                sorted_grade = current_semester_grade
 
             # 大于等于60分的课程不为空时
             if filtered_grade:
