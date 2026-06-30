@@ -205,10 +205,6 @@ with open(exam_file_path, "r") as exam_file, open(old_exam_file_path, "r") as ol
     exam_content = exam_file.read()
     old_exam_content = old_exam_file.read()
 
-# 整合MD5值
-integrated_grade_info += f"\n" f"MD5：{encrypted_integrated_grade_info}"
-integrated_exam_info += f"\n" f"MD5：{encrypted_integrated_exam_info}"
-
 # 获取未公布成绩的课程和异常的课程
 selected_courses_filtering = get_selected_courses(student_client)
 
@@ -245,8 +241,8 @@ first_run_text = (
 # 若是在 Github Actions 等平台运行,请不要使用print(integrated_send_info)
 integrated_send_info = (
     f"{integrated_info}\n"
-    f"{integrated_grade_info}\n"
     f"{integrated_exam_info}\n"
+    f"{integrated_grade_info}\n"
     f"{selected_courses_filtering}\n"
     f"{workflow_info if github_actions else current_time}\n"
     f"{copyright_text}"
