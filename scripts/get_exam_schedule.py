@@ -34,23 +34,23 @@ def get_exam_schedule(student_client, output_type="none"):
                         exam["title"].replace("（", "(").replace("）", ")")
                     )
 
-            # 按照考试时间升序排序（最近要考的排最前面）
-            # 对于没有考试时间的，将时间设置为 9999-12-31 23:59:59，确保排在最后
+            # 按照考试时间降序排序（最新/最近要考的排最前面）
+            # 对于没有考试时间的，将时间设置为 1970-01-01 00:00:00，确保排在最后
             sorted_exam = sorted(
                 exam_schedule,
                 key=lambda x: (
                     x.get("time")
                     if x.get("time")
-                    else "9999-12-31 23:59:59"
+                    else "1970-01-01 00:00:00"
                 ),
-                reverse=False,
+                reverse=True,
             )
 
             # 初始化输出考试安排信息字符串
             integrated_exam_info = "------\n考试安排信息："
 
-            # 遍历前8条考试安排
-            for _, exam in enumerate(sorted_exam[:8]):
+            # 遍历所有考试安排
+            for _, exam in enumerate(sorted_exam):
 
                 # 整合考试安排信息
                 integrated_exam_info += (
